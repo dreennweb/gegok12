@@ -1,17 +1,14 @@
 <?php
 
 return [
-
     'default' => env('FILESYSTEM_DISK', 'local'),
 
     'disks' => [
-
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app'),
-            'throw' => false,
             'url' => env('APP_URL') . '/storage',
-
+            'visibility' => 'private',
         ],
 
         'public' => [
@@ -19,7 +16,13 @@ return [
             'root' => storage_path('app/public'),
             'url' => env('APP_URL') . '/storage',
             'visibility' => 'public',
-            'throw' => false,
+        ],
+
+        'secure_documents' => [
+            'driver' => 'local',
+            'root' => storage_path('app/secure_documents'),
+            'url' => env('APP_URL') . '/api/documents/download',
+            'visibility' => 'private',
         ],
 
         's3' => [
@@ -31,20 +34,10 @@ return [
             'url' => env('AWS_URL'),
             'endpoint' => env('AWS_ENDPOINT'),
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
-            'throw' => false,
-        ],
-
-        'uploads' => [
-            'driver' => 'local',
-            'root' => public_path(),
-            'url' => env('APP_URL'),
-            'visibility' => 'public',
-            'throw' => false,
         ],
     ],
 
     'links' => [
-        public_path('storage') => storage_path('app'),
+        public_path('storage') => storage_path('app/public'),
     ],
-
 ];
